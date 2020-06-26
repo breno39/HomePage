@@ -6,6 +6,7 @@ import { emailPadraoValidator } from 'src/app/compartilhado/validators/email-val
 import { comparaSenha } from '../validator/comparaSenha/comparaSenha.validator';
 import { SignupService } from '../service/signup.service';
 import { NewUser } from '../interface/new-user';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,7 @@ import { NewUser } from '../interface/new-user';
 export class SignupComponent implements OnInit {
   landingPage = "http://localhost:4200/";
   signupForm: FormGroup;
-  exibeSeExisteEmail: boolean = false;
+  protected exibeSeExisteEmail: boolean = false;
 
   constructor(
     private fromBuilder: FormBuilder,
@@ -54,7 +55,8 @@ export class SignupComponent implements OnInit {
 
   enviar() {
     const newUser = this.signupForm.getRawValue() as NewUser;
-    console.log(newUser);
+    // console.log(newUser);
+    // console.log(this.signupForm.valid);
     this.signupService
       .register(newUser)
       .subscribe(
@@ -64,9 +66,10 @@ export class SignupComponent implements OnInit {
             // this.exibeSeExisteEmail = false;
           }else{
             this.exibeSeExisteEmail = true;
-            this.signupForm.reset();
+            this.signupForm.controls["email"].reset("");
           }
       })
+    console.log(this.signupForm.valid);
   }
 
   removeMensagem() {

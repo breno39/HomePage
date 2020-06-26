@@ -12,7 +12,7 @@ const API_URL = "";
   providedIn: 'root'
 })
 export class SignupService {
-  HttpStatus: string = "404";
+  private HttpStatus: string = "404";
 
   constructor(
     private http: HttpClient
